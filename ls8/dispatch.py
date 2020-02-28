@@ -91,15 +91,19 @@ class Dispatch():
 
     def jump(self, cpu):
         reg = cpu.ram_read(cpu.pc + 1)
-        cpu.pc = cpu.register[reg]
+        cpu.pc = cpu.register[reg]-1
 
     def equal(self, cpu):
         # equal flag is 0b00000001, = 1
         if cpu.fl == 1:
             self.jump(cpu)
+        else:
+            cpu.pc += 1
 
     def not_equal(self, cpu):
         # not equal means flag is 0b00000010
         # or 0b00000100
-        if cpu.fl > 0:
+        if cpu.fl > 1:
             self.jump(cpu)
+        else:
+            cpu.pc += 1
