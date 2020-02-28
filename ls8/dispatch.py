@@ -7,7 +7,7 @@ POP = 0b01000110
 CALL = 0b01010000
 ADD = 0b10100000
 CMP = 0b10100111
-
+JMP = 0b01010100
 class Dispatch():
     def __init__(self):
         self.dispatch = {
@@ -20,6 +20,7 @@ class Dispatch():
             CALL: self.call,
             ADD: self.add,
             CMP: self.compare,
+            JMP: self.jump,
         }
 
     def run(self, command, cpu):
@@ -83,3 +84,7 @@ class Dispatch():
         cpu.ram_write(cpu.sc, 0)
         cpu.sc += 1
         cpu.pc += 1
+
+    def jump(self, cpu):
+        reg = cpu.ram_read(cpu.pc + 1)
+        cpu.pc = cpu.register[reg]
