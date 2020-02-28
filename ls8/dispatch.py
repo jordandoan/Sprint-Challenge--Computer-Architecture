@@ -8,6 +8,8 @@ CALL = 0b01010000
 ADD = 0b10100000
 CMP = 0b10100111
 JMP = 0b01010100
+JEQ = 0b01010101
+JNE = 0b01010110
 class Dispatch():
     def __init__(self):
         self.dispatch = {
@@ -21,6 +23,8 @@ class Dispatch():
             ADD: self.add,
             CMP: self.compare,
             JMP: self.jump,
+            JEQ: self.equal,
+            JNE: self.not_equal,
         }
 
     def run(self, command, cpu):
@@ -88,3 +92,14 @@ class Dispatch():
     def jump(self, cpu):
         reg = cpu.ram_read(cpu.pc + 1)
         cpu.pc = cpu.register[reg]
+
+    def equal(self, cpu):
+        # equal flag is 0b00000001, = 1
+        if self.fl == 1:
+            self.jump(cpu)
+
+    def not_equal(self, cpu):
+        # not equal means flag is 0b00000010
+        # or 0b00000100
+        if self.fl > 0:
+            self.jump(cpu)
