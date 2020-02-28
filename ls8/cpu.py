@@ -42,12 +42,12 @@ class CPU:
         """ALU operations."""
 
         if op == "ADD":
-            self.reg[reg_a] += self.reg[reg_b]
+            self.register[reg_a] += self.register[reg_b]
         # elif op == "SUB": etc
         elif op == "CMP":
-            if self.reg[reg_a] < self.reg[reg_b]:
+            if self.register[reg_a] < self.register[reg_b]:
                 self.fl = 0b00000100
-            elif self.reg[reg_a] > self.reg[reg_b]:
+            elif self.register[reg_a] > self.register[reg_b]:
                 self.fl = 0b00000010
             else:
                 self.fl = 0b00000001

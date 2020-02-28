@@ -34,8 +34,8 @@ class Dispatch():
         return True
 
     def compare(self, cpu):
-        reg1 = cpu.register[cpu.ram_read(cpu.pc+1)]
-        reg2 = cpu.reigster[cpu.ram_read(cpu.pc+2)]
+        reg1 = cpu.ram_read(cpu.pc+1)
+        reg2 = cpu.ram_read(cpu.pc+2)
         cpu.alu('CMP', reg1, reg2)
         cpu.pc += 2
 
@@ -95,11 +95,11 @@ class Dispatch():
 
     def equal(self, cpu):
         # equal flag is 0b00000001, = 1
-        if self.fl == 1:
+        if cpu.fl == 1:
             self.jump(cpu)
 
     def not_equal(self, cpu):
         # not equal means flag is 0b00000010
         # or 0b00000100
-        if self.fl > 0:
+        if cpu.fl > 0:
             self.jump(cpu)
