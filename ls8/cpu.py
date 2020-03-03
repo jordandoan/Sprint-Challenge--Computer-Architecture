@@ -32,11 +32,16 @@ class CPU:
         except:
             path = 'examples/print8.ls8'
         with open(path, 'r') as program:
+
             for instruction in program:
-                if len(instruction) > 1:
-                    if instruction[0] != '#':
-                        self.ram[address] = int(instruction[0:8],2)
-                        address += 1
+                splits = instruction.split('\\n')
+                for i in splits:
+                    self.ram[address] = int(i, 2)
+                    address += 1
+                # if len(instruction) > 1:
+                #     if instruction[0] != '#':
+                #         self.ram[address] = int(instruction[0:8],2)
+                #         address += 1
     def alu(self, op, reg_a, reg_b):
         """ALU operations."""
 

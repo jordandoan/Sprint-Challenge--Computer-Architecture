@@ -10,6 +10,7 @@ CMP = 0b10100111
 JMP = 0b01010100
 JEQ = 0b01010101
 JNE = 0b01010110
+PRA = 0b01001000
 class Dispatch():
     def __init__(self):
         self.dispatch = {
@@ -25,8 +26,11 @@ class Dispatch():
             JMP: self.jump,
             JEQ: self.equal,
             JNE: self.not_equal,
+            PRA: self.ascii
         }
-
+    def ascii(self, cpu):
+        print(chr((cpu.register[cpu.ram_read(cpu.pc+1)])))
+        cpu.pc += 1
     def run(self, command, cpu):
         return self.dispatch[command](cpu)
 
